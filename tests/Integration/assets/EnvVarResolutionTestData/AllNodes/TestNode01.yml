@@ -1,0 +1,3 @@
+NodeName: TestNode01
+Description: Test node for environment variable resolution
+Role: WebServer

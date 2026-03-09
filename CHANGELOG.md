@@ -39,6 +39,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   evaluate to `$null` or empty strings are now silently skipped
   instead of causing lookup errors.
 - Added knockout support for hashtable array items.
+- Added integration tests for environment variable resolution in
+  `ResolutionPrecedence` paths
+  ([#126](https://github.com/gaelcolas/datum/pull/126)).
 
 ### Changed
 
@@ -54,6 +57,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed `Join-Path` throwing `DriveNotFoundException` when
+  `ResolutionPrecedence` entries contain environment variable
+  references such as `$($env:VarName)`, by using
+  `[System.IO.Path]::Combine` instead
+  ([#126](https://github.com/gaelcolas/datum/pull/126)).
 - Fix `ConvertTo-Json` truncation warnings for deep data structures
   in `Merge-Datum`, `Merge-Hashtable`, and
   `Invoke-TestHandlerAction`
