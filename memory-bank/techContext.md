@@ -10,6 +10,22 @@
 - **Versioning**: GitVersion (Semantic Versioning)
 - **Package Distribution**: PowerShell Gallery
 
+## Running Tests
+**CRITICAL**: Never use the `runTests` tool or run Pester inside VS Code's integrated PowerShell session — it will hang VS Code. Always run tests in a **separate `pwsh` process**:
+
+```powershell
+# Full build + test (Sampler)
+pwsh -NoProfile -NonInteractive -Command "./build.ps1 -Tasks test"
+
+# Single test file
+pwsh -NoProfile -NonInteractive -Command "Invoke-Pester -Path './tests/Integration/Resolve-Datum.Tests.ps1' -Output Detailed"
+
+# With module pre-loaded (for integration tests that need the built module)
+pwsh -NoProfile -NonInteractive -Command "Import-Module ./output/datum/0.0.1/datum.psd1 -Force; Invoke-Pester -Path './tests/Integration/' -Output Detailed"
+```
+
+Use `run_in_terminal` with `isBackground = false` and a generous timeout (180000+ ms).
+
 ## Dependencies
 ### Runtime
 - `powershell-yaml` — YAML parsing (required module)
